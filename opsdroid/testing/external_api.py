@@ -81,7 +81,7 @@ class ExternalAPIMockServer:
         timeout = Timeout(self.start_timeout, "Timed out starting web server")
         while timeout.run():
             try:
-                self.site = web.TCPSite(self.runner, host=self.host, port=self.port)
+                self.site = web.TCPSite(self.runner, host=self.host, port=self.port, reuse_address=False)
                 await self.site.start()
                 break
             except OSError as e:
