@@ -32,12 +32,17 @@ class ConnectorMastodon(Connector):
             api_base_url=self.config.get("api-base-url"),
         )
 
+    async def disconnect(self):
+        self.mastodon.session.close()
+        self.mastodon = None
+
     async def listen(self):
         pass
 
     async def upload_image(self, image):
         with tempfile.NamedTemporaryFile() as tmpfh:
             tmpfh.write(await image.get_file_bytes())
+            tmpfh.flush()
             media = await asyncio.get_event_loop().run_in_executor(
                 None, self.mastodon.media_post, tmpfh.name, await image.get_mimetype()
             )

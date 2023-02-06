@@ -37,6 +37,7 @@ async def test_message_sent(opsdroid, caplog):
     async with mock_api.running():
         await connector.send(Message(text="Hello world!"))
         assert mock_api.called("/api/v1/statuses")
+        await connector.disconnect()
 
 
 @pytest.mark.asyncio
@@ -66,6 +67,7 @@ async def test_image_sent(opsdroid, caplog):
         await connector.send(image)
         assert mock_api.called("/api/v1/media")
         assert mock_api.called("/api/v1/statuses")
+        await connector.disconnect()
 
 
 @pytest.mark.asyncio
@@ -96,3 +98,4 @@ async def test_toot_sent(opsdroid, caplog):
         await connector.send(toot)
         assert mock_api.called("/api/v1/media")
         assert mock_api.called("/api/v1/statuses")
+        await connector.disconnect()

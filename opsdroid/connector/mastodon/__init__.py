@@ -1,1 +1,1 @@
-from .mastodon import ConnectorMastodon, Toot  # noqa
+from .connector import ConnectorMastodon, Toot  # noqa
